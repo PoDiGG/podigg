@@ -6,6 +6,7 @@ const transform = require('stream-transform');
 
 const Point = require('../lib/Point.js');
 const Region = require('../lib/Region.js');
+const TripsVisualizer = require('../lib/TripsVisualizer.js');
 
 var points = [];
 var region = new Region();
@@ -91,10 +92,12 @@ function generateStopsAndTrips() {
         var targetPoint = getRandomElementWeightedBySize(points, param_target_stop_in_radius_choice_power);
 
         if (targetPoint) {
+            region.markStation(point.x, point.y);
+            region.markStation(targetPoint.x, targetPoint.y);
             trips.push({from: point, to: targetPoint});
         }
     }
 
-    console.log(trips); // TODO
+    var visualizer = new TripsVisualizer(region, trips).render("trips.png");
     // TODO: modify all trips and try to go over stations
 }

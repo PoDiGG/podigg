@@ -9,6 +9,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "canvas": "^1.4.0",
     "csv-parse": "^1.1.7",
     "stream-transform": "^0.1.1"
   }
