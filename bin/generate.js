@@ -94,9 +94,8 @@ Promise.all([
     console.log("GS: " + goldenStandardEdges.length); // TODO
 
     // Compare the two edge lists with the golden standard (calculate distance)
-    // TODO
-    //var distance_rand = DistanceHelpers.points(randomEdges, goldenStandardEdges, DistanceHelpers.point2D);
-    //console.log("RAND distance: " + distance_rand); // TODO
+    var distance_rand = DistanceHelpers.points(randomEdges, goldenStandardEdges, DistanceHelpers.line2D);
+    console.log("RAND distance: " + distance_rand); // TODO
   })
   .catch(err => {
     console.error(err);
