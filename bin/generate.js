@@ -7,6 +7,7 @@ const DistanceHelpers = require('../lib/DistanceHelpers.js');
 const ParameterizedStopsGenerator = require('../lib/ParameterizedStopsGenerator.js');
 const RandomStopsGenerator = require('../lib/RandomStopsGenerator.js');
 
+const ParameterizedEdgesGenerator = require('../lib/ParameterizedEdgesGenerator.js');
 const RandomEdgesGenerator = require('../lib/RandomEdgesGenerator.js');
 /*
 // Generate stops based on population distribution
@@ -75,27 +76,42 @@ function getRandomEdges() {
   });
 }
 
+// Generate edges by clustering
+function getParameterizedEdges() {
+  return new Promise((resolve, reject) => {
+    new RegionFactory('input_data/region_cells.csv', true).createRegion((region) => {
+      var generator = new ParameterizedEdgesGenerator(region);
+      generator.generate();
+      var edges = generator.getEdges();
+      new TripsVisualizer(region, edges).render("edges_parameterized.png");
+      resolve(edges);
+    });
+  });
+}
+
 // Load golden standard of edges
 function getGoldenStandardEdges() {
   return new Promise((resolve, reject) => {
     new RegionFactory('input_data/region_cells.csv', true, true).createRegion((region, edges) => {
-      new TripsVisualizer(region, edges).render("edges_gs.png");
+      //new TripsVisualizer(region, edges).render("edges_gs.png");
       resolve(edges);
     });
   });
 }
 
 Promise.all([
+  getParameterizedEdges(),
   getRandomEdges(),
   getGoldenStandardEdges()
 ])
-  .then(([randomEdges, goldenStandardEdges]) => {
+  .then(([parameterizedEdges, randomEdges, goldenStandardEdges]) => {
+    console.log("PARAM: " + parameterizedEdges.length); // TODO
     console.log("RAND: " + randomEdges.length); // TODO
     console.log("GS: " + goldenStandardEdges.length); // TODO
 
     // Compare the two edge lists with the golden standard (calculate distance)
-    var distance_rand = DistanceHelpers.points(randomEdges, goldenStandardEdges, DistanceHelpers.line2D);
-    console.log("RAND distance: " + distance_rand); // TODO
+    //var distance_rand = DistanceHelpers.points(randomEdges, goldenStandardEdges, DistanceHelpers.line2D);
+    //console.log("RAND distance: " + distance_rand); // TODO
   })
   .catch(err => {
     console.error(err);
