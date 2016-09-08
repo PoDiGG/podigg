@@ -83,7 +83,7 @@ function getParameterizedEdges() {
       var generator = new ParameterizedEdgesGenerator(region);
       generator.generate();
       var edges = generator.getEdges();
-      new TripsVisualizer(region, edges).render("edges_parameterized.png");
+      new TripsVisualizer(region, edges, generator.debugpoints).render("edges_parameterized.png");
       resolve(edges);
     });
   });
@@ -110,7 +110,9 @@ Promise.all([
     console.log("GS: " + goldenStandardEdges.length); // TODO
 
     // Compare the two edge lists with the golden standard (calculate distance)
+    //var distance_param = DistanceHelpers.points(parameterizedEdges, goldenStandardEdges, DistanceHelpers.line2D);
     //var distance_rand = DistanceHelpers.points(randomEdges, goldenStandardEdges, DistanceHelpers.line2D);
+    //console.log("PARAM distance: " + distance_param); // TODO
     //console.log("RAND distance: " + distance_rand); // TODO
   })
   .catch(err => {
