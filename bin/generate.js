@@ -9,16 +9,24 @@ const RandomStopsGenerator = require('../lib/RandomStopsGenerator.js');
 
 const ParameterizedEdgesGenerator = require('../lib/ParameterizedEdgesGenerator.js');
 const RandomEdgesGenerator = require('../lib/RandomEdgesGenerator.js');
-/*
+
 // Generate stops based on population distribution
 function getParameterizedStops() {
-    return new Promise((resolve, reject) => {
-        new RegionFactory('input_data/region_cells.csv').createRegion((region) => {
-            new ParameterizedStopsGenerator(region).generate();
-            resolve(region.getStations());
-            //new TripsVisualizer(region).render("stops_parameterized.png");
-        });
+  return new Promise((resolve, reject) => {
+    new RegionFactory('input_data/region_cells.csv').createRegion((region) => {
+      var generator_stops = new ParameterizedStopsGenerator(region);
+      generator_stops.generate();
+
+      var generator_edges = new ParameterizedEdgesGenerator(region);
+      generator_edges.generate();
+      var edges = generator_edges.getEdges();
+
+      generator_stops.generatePostEdges(edges);
+
+      resolve(region.getStations());
+      new TripsVisualizer(region, edges).render("stops_parameterized.png");
     });
+  });
 }
 
 // Generate stops at random
@@ -61,8 +69,8 @@ Promise.all([
     .catch(err => {
         console.error(err);
     });
-*/
 
+/*
 // Generate edges at random
 function getRandomEdges() {
   return new Promise((resolve, reject) => {
@@ -117,4 +125,4 @@ Promise.all([
   })
   .catch(err => {
     console.error(err);
-  });
+  });*/
