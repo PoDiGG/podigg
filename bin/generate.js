@@ -10,8 +10,10 @@ const RandomStopsGenerator = require('../lib/stop/RandomStopsGenerator.js');
 const ParameterizedEdgesGenerator = require('../lib/edge/ParameterizedEdgesGenerator.js');
 const RandomEdgesGenerator = require('../lib/edge/RandomEdgesGenerator.js');
 
+const RandomRoutesGenerator = require('../lib/route/RandomRoutesGenerator');
+
 // Generate stops based on population distribution
-function getParameterizedStops() {
+/*function getParameterizedStops() {
   return new Promise((resolve, reject) => {
     new RegionFactory('input_data/region_cells.csv').createRegion((region) => {
       var generator_stops = new ParameterizedStopsGenerator(region);
@@ -68,7 +70,7 @@ Promise.all([
     })
     .catch(err => {
         console.error(err);
-    });
+    });*/
 
 /*
 // Generate edges at random
@@ -126,3 +128,49 @@ Promise.all([
   .catch(err => {
     console.error(err);
   });*/
+
+
+// Generate routes at random
+function getRandomRoutes() {
+  return new Promise((resolve, reject) => {
+    new RegionFactory('input_data/region_cells.csv', true, true).createRegion((region) => {
+      var generator = new RandomRoutesGenerator(region);
+      generator.generate();
+      var routes = generator.getRoutes();
+      new TripsVisualizer(region, region.getEdges(), routes).render("routes_random.png"); // TODO: render routes
+      resolve(routes);
+    });
+  });
+}
+
+// Load golden standard of edges
+function getGoldenStandardRoutes() {
+  return new Promise((resolve, reject) => {
+    new RegionFactory('input_data/region_cells.csv', true, true).createRegion((region, edges) => {
+      var routes = []; // TODO: load from GTFS (routes are lists of edges)
+      new TripsVisualizer(region, region.getEdges(), routes).render("routes_gs.png"); // TODO: render routes
+      resolve(edges);
+    });
+  });
+}
+
+Promise.all([
+  getRandomRoutes(),
+  getGoldenStandardRoutes()
+])
+  .then(([randomRoutes, goldenStandardRoutes]) => {
+    console.log("RAND: " + randomRoutes.length); // TODO
+    console.log("GS: " + goldenStandardRoutes.length); // TODO
+
+    var routeDistance = function(route1, route2) {
+      return DistanceHelpers.points(route1, route2, DistanceHelpers.line2D);
+    };
+
+    // Compare the two edge lists with the golden standard (calculate distance)
+    // TODO
+    var distance_rand = DistanceHelpers.points(randomRoutes, goldenStandardRoutes, routeDistance);
+    console.log("RAND distance: " + distance_rand); // TODO
+  })
+  .catch(err => {
+    console.error(err);
+  });
