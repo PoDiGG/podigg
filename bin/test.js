@@ -1,7 +1,7 @@
 'use strict';
 
-const Point = require('../lib/Point.js');
-const DistanceHelpers = require('../lib/DistanceHelpers.js');
+const Point = require('../lib/util/Point.js');
+const DistanceHelpers = require('../lib/util/DistanceHelpers.js');
 
 var A = [];
 var B = [];

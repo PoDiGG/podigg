@@ -1,14 +1,14 @@
 'use strict';
 
-const RegionFactory = require('../lib/RegionFactory.js');
-const TripsVisualizer = require('../lib/TripsVisualizer.js');
-const DistanceHelpers = require('../lib/DistanceHelpers.js');
+const RegionFactory = require('../lib/region/RegionFactory.js');
+const TripsVisualizer = require('../lib/visualize/TripsVisualizer.js');
+const DistanceHelpers = require('../lib/util/DistanceHelpers.js');
 
-const ParameterizedStopsGenerator = require('../lib/ParameterizedStopsGenerator.js');
-const RandomStopsGenerator = require('../lib/RandomStopsGenerator.js');
+const ParameterizedStopsGenerator = require('../lib/stop/ParameterizedStopsGenerator.js');
+const RandomStopsGenerator = require('../lib/stop/RandomStopsGenerator.js');
 
-const ParameterizedEdgesGenerator = require('../lib/ParameterizedEdgesGenerator.js');
-const RandomEdgesGenerator = require('../lib/RandomEdgesGenerator.js');
+const ParameterizedEdgesGenerator = require('../lib/edge/ParameterizedEdgesGenerator.js');
+const RandomEdgesGenerator = require('../lib/edge/RandomEdgesGenerator.js');
 
 // Generate stops based on population distribution
 function getParameterizedStops() {
