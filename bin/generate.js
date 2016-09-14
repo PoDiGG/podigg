@@ -133,11 +133,11 @@ Promise.all([
 // Generate routes at random
 function getRandomRoutes() {
   return new Promise((resolve, reject) => {
-    new RegionFactory('input_data/region_cells.csv', true, true).createRegion((region) => {
-      var generator = new RandomRoutesGenerator(region);
+    new RegionFactory('input_data/region_cells.csv', true, true).createRegion((region, edges) => {
+      var generator = new RandomRoutesGenerator(region, edges);
       generator.generate();
       var routes = generator.getRoutes();
-      new TripsVisualizer(region, region.getEdges(), routes).render("routes_random.png"); // TODO: render routes
+      new TripsVisualizer(region, edges, routes).render("routes_random.png"); // TODO: render routes
       resolve(routes);
     });
   });
@@ -146,9 +146,8 @@ function getRandomRoutes() {
 // Load golden standard of edges
 function getGoldenStandardRoutes() {
   return new Promise((resolve, reject) => {
-    new RegionFactory('input_data/region_cells.csv', true, true).createRegion((region, edges) => {
-      var routes = []; // TODO: load from GTFS (routes are lists of edges)
-      new TripsVisualizer(region, region.getEdges(), routes).render("routes_gs.png"); // TODO: render routes
+    new RegionFactory('input_data/region_cells.csv', true, true).createRegion((region, edges, routes) => {
+      new TripsVisualizer(region, edges, routes).render("routes_gs.png"); // TODO: render routes
       resolve(edges);
     });
   });
@@ -167,7 +166,6 @@ Promise.all([
     };
 
     // Compare the two edge lists with the golden standard (calculate distance)
-    // TODO
     var distance_rand = DistanceHelpers.points(randomRoutes, goldenStandardRoutes, routeDistance);
     console.log("RAND distance: " + distance_rand); // TODO
   })
