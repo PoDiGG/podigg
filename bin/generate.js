@@ -148,7 +148,7 @@ function getGoldenStandardRoutes() {
   return new Promise((resolve, reject) => {
     new RegionFactory('input_data/region_cells.csv', true, true).createRegion((region, edges, routes) => {
       new TripsVisualizer(region, edges, routes).render("routes_gs.png"); // TODO: render routes
-      resolve(edges);
+      resolve(routes);
     });
   });
 }
@@ -162,7 +162,7 @@ Promise.all([
     console.log("GS: " + goldenStandardRoutes.length); // TODO
 
     var routeDistance = function(route1, route2) {
-      return DistanceHelpers.points(route1, route2, DistanceHelpers.line2D);
+      return DistanceHelpers.points(route1.edges, route2.edges, DistanceHelpers.line2D);
     };
 
     // Compare the two edge lists with the golden standard (calculate distance)
