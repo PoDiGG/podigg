@@ -161,13 +161,30 @@ Promise.all([
     console.log("RAND: " + randomRoutes.length); // TODO
     console.log("GS: " + goldenStandardRoutes.length); // TODO
 
-    var routeDistance = function(route1, route2) {
-      return DistanceHelpers.points(route1.edges, route2.edges, DistanceHelpers.line2D);
-    };
+    // Wrap distance functions in caches in an attempt to speed up calculations. (Makes it slower...)
+    /*var maxRoutes = Math.max(randomRoutes.length, goldenStandardRoutes.length);
+    var maxY = 1000; // TODO: calc exact
+    var maxEdges = 50000; // TODO: calc exact
+    var pointDistanceCached = DistanceHelpers.cachedDistance(DistanceHelpers.point2D, (point1, point2) => {
+      return (point1.x + point2.x) * maxY + (point1.y + point2.y);
+    });
+    var lineDistance = DistanceHelpers.line2DCustomD(DistanceHelpers.point2D);
+    var lineDistanceCached = DistanceHelpers.cachedDistance(lineDistance, (line1, line2) => {
+      var minId = Math.min(line1.edgeId, line2.edgeId);
+      var maxId = Math.max(line1.edgeId, line2.edgeId);
+      return (minId + maxEdges) * maxId;
+    });
+    var routeDistance = (route1, route2) => DistanceHelpers.points(route1.edges, route2.edges, lineDistance);
+    var routeDistanceCached = DistanceHelpers.cachedDistance(routeDistance, (route1, route2) => {
+      var minId = Math.min(route1.routeId, route2.routeId);
+      var maxId = Math.max(route1.routeId, route2.routeId);
+      return (minId + maxRoutes) * maxId;
+    });*/
+    var routeDistance = (route1, route2) => DistanceHelpers.points(route1.edges, route2.edges, DistanceHelpers.line2DCustomD(DistanceHelpers.point2D));
 
     // Compare the two edge lists with the golden standard (calculate distance)
-    var distance_rand = DistanceHelpers.points(randomRoutes, goldenStandardRoutes, routeDistance);
-    console.log("RAND distance: " + distance_rand); // TODO
+    //var distance_rand = DistanceHelpers.points(randomRoutes, goldenStandardRoutes, routeDistance);
+    //console.log("RAND distance: " + distance_rand); // TODO
   })
   .catch(err => {
     console.error(err);
