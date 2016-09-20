@@ -11,6 +11,7 @@ const ParameterizedEdgesGenerator = require('../lib/edge/ParameterizedEdgesGener
 const RandomEdgesGenerator = require('../lib/edge/RandomEdgesGenerator.js');
 
 const RandomRoutesGenerator = require('../lib/route/RandomRoutesGenerator');
+const ParameterizedRoutesGenerator = require('../lib/route/ParameterizedRoutesGenerator');
 
 // Generate stops based on population distribution
 /*function getParameterizedStops() {
@@ -137,7 +138,24 @@ function getRandomRoutes() {
       var generator = new RandomRoutesGenerator(region, edges);
       generator.generate();
       var routes = generator.getRoutes();
-      new TripsVisualizer(region, edges, routes).render("routes_random.png"); // TODO: render routes
+      //new TripsVisualizer(region, edges, routes).render("routes_random.png");
+      resolve(routes);
+    });
+  });
+}
+
+// Generate routes using path finding
+function getParameterizedRoutes() {
+  return new Promise((resolve, reject) => {
+    new RegionFactory('input_data/region_cells.csv', true).createRegion((region) => {
+      var edgesGenerator = new ParameterizedEdgesGenerator(region);
+      edgesGenerator.generate();
+      var edges = edgesGenerator.getEdges();
+
+      var generator = new ParameterizedRoutesGenerator(region, edges);
+      generator.generate();
+      var routes = generator.getRoutes();
+      new TripsVisualizer(region, edges, routes, generator.debugpoints).render("routes_parameterized.png");
       resolve(routes);
     });
   });
@@ -147,17 +165,19 @@ function getRandomRoutes() {
 function getGoldenStandardRoutes() {
   return new Promise((resolve, reject) => {
     new RegionFactory('input_data/region_cells.csv', true, true).createRegion((region, edges, routes) => {
-      new TripsVisualizer(region, edges, routes).render("routes_gs.png"); // TODO: render routes
+      //new TripsVisualizer(region, edges, routes).render("routes_gs.png");
       resolve(routes);
     });
   });
 }
 
 Promise.all([
+  getParameterizedRoutes(),
   getRandomRoutes(),
   getGoldenStandardRoutes()
 ])
-  .then(([randomRoutes, goldenStandardRoutes]) => {
+  .then(([parameterizedRoutes, randomRoutes, goldenStandardRoutes]) => {
+    console.log("PARAM: " + parameterizedRoutes.length); // TODO
     console.log("RAND: " + randomRoutes.length); // TODO
     console.log("GS: " + goldenStandardRoutes.length); // TODO
 
