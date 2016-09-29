@@ -14,6 +14,7 @@ const RandomRoutesGenerator = require('../lib/route/RandomRoutesGenerator');
 const ParameterizedRoutesGenerator = require('../lib/route/ParameterizedRoutesGenerator');
 
 const RandomConnectionsGenerator = require('../lib/connection/RandomConnectionsGenerator');
+const ParameterizedConnectionsGenerator = require('../lib/connection/ParameterizedConnectionsGenerator');
 
 function generateStops() {
   // Generate stops based on population distribution
@@ -233,19 +234,11 @@ function generateConnections() {
   // Generate connections
   function getParameterizedConnections() {
     return new Promise((resolve, reject) => {
-      new RegionFactory('input_data/region_cells.csv', true).createRegion((region, edges, routes) => {
-        /*var edgesGenerator = new ParameterizedEdgesGenerator(region);
-        edgesGenerator.generate();
-        var edges = edgesGenerator.getEdges();
-
-        var routesGenerator = new ParameterizedRoutesGenerator(region, edges);
-        routesGenerator.generate();
-        var routes = routesGenerator.getRoutes();*/
-
-        var connections = [];// TODO
-
-        //new TripsVisualizer(region, edges, routes, connections).render("connections_parameterized.png");
-
+      new RegionFactory('input_data/region_cells.csv', true, true).createRegion((region, edges, routes) => {
+        var generator = new ParameterizedConnectionsGenerator(region, routes);
+        generator.generate();
+        var connections = generator.getConnections();
+        new TripsVisualizer(region, edges, routes, connections).render("connections_parameterized.png");
         resolve(connections);
       });
     });
