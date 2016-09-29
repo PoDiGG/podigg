@@ -1,17 +1,19 @@
 'use strict';
 
-const RegionFactory = require('../lib/region/RegionFactory.js');
-const TripsVisualizer = require('../lib/visualize/TripsVisualizer.js');
-const DistanceHelpers = require('../lib/util/DistanceHelpers.js');
+const RegionFactory = require('../lib/region/RegionFactory');
+const TripsVisualizer = require('../lib/visualize/TripsVisualizer');
+const DistanceHelpers = require('../lib/util/DistanceHelpers');
 
-const ParameterizedStopsGenerator = require('../lib/stop/ParameterizedStopsGenerator.js');
-const RandomStopsGenerator = require('../lib/stop/RandomStopsGenerator.js');
+const ParameterizedStopsGenerator = require('../lib/stop/ParameterizedStopsGenerator');
+const RandomStopsGenerator = require('../lib/stop/RandomStopsGenerator');
 
-const ParameterizedEdgesGenerator = require('../lib/edge/ParameterizedEdgesGenerator.js');
-const RandomEdgesGenerator = require('../lib/edge/RandomEdgesGenerator.js');
+const ParameterizedEdgesGenerator = require('../lib/edge/ParameterizedEdgesGenerator');
+const RandomEdgesGenerator = require('../lib/edge/RandomEdgesGenerator');
 
 const RandomRoutesGenerator = require('../lib/route/RandomRoutesGenerator');
 const ParameterizedRoutesGenerator = require('../lib/route/ParameterizedRoutesGenerator');
+
+const RandomConnectionsGenerator = require('../lib/connection/RandomConnectionsGenerator');
 
 function generateStops() {
   // Generate stops based on population distribution
@@ -134,7 +136,7 @@ function generateEdges() {
 }
 
 function generateRoutes() {
-// Generate routes at random
+  // Generate routes at random
   function getRandomRoutes() {
     return new Promise((resolve, reject) => {
       new RegionFactory('input_data/region_cells.csv', true, true).createRegion((region, edges) => {
@@ -147,7 +149,7 @@ function generateRoutes() {
     });
   }
 
-// Generate routes using path finding
+  // Generate routes using path finding
   function getParameterizedRoutes() {
     return new Promise((resolve, reject) => {
       new RegionFactory('input_data/region_cells.csv', true).createRegion((region) => {
@@ -164,7 +166,7 @@ function generateRoutes() {
     });
   }
 
-// Load golden standard of edges
+  // Load golden standard of edges
   function getGoldenStandardRoutes() {
     return new Promise((resolve, reject) => {
       new RegionFactory('input_data/region_cells.csv', true, true).createRegion((region, edges, routes) => {
@@ -214,6 +216,68 @@ function generateRoutes() {
     });
 }
 
+function generateConnections() {
+  // Generate connections at random
+  function getRandomConnections() {
+    return new Promise((resolve, reject) => {
+      new RegionFactory('input_data/region_cells.csv', true, true).createRegion((region, edges, routes) => {
+        var generator = new RandomConnectionsGenerator(region, routes);
+        generator.generate();
+        var connections = generator.getConnections();
+        new TripsVisualizer(region, edges, routes).render("connections_random.png");
+        resolve(connections);
+      });
+    });
+  }
+
+  // Generate connections
+  function getParameterizedConnections() {
+    return new Promise((resolve, reject) => {
+      new RegionFactory('input_data/region_cells.csv', true).createRegion((region, edges, routes) => {
+        /*var edgesGenerator = new ParameterizedEdgesGenerator(region);
+        edgesGenerator.generate();
+        var edges = edgesGenerator.getEdges();
+
+        var routesGenerator = new ParameterizedRoutesGenerator(region, edges);
+        routesGenerator.generate();
+        var routes = routesGenerator.getRoutes();*/
+
+        var connections = [];// TODO
+
+        //new TripsVisualizer(region, edges, routes, connections).render("connections_parameterized.png");
+
+        resolve(connections);
+      });
+    });
+  }
+
+  // Load golden standard of connections
+  function getGoldenStandardConnections() {
+    return new Promise((resolve, reject) => {
+      new RegionFactory('input_data/region_cells.csv', true, true).createRegion((region, edges, routes) => {
+        new TripsVisualizer(region, edges, routes).render("connections_gs.png");
+        var connections = []; // TODO
+        resolve(connections);
+      });
+    });
+  }
+
+  Promise.all([
+    getParameterizedConnections(),
+    getRandomConnections(),
+    getGoldenStandardConnections()
+  ])
+    .then(([parameterizedConnections, randomConnections, goldenStandardConnections]) => {
+      console.log("PARAM: " + parameterizedConnections.length); // TODO
+      console.log("RAND: " + randomConnections.length); // TODO
+      console.log("GS: " + goldenStandardConnections.length); // TODO
+    })
+    .catch(err => {
+      console.error(err);
+    });
+}
+
 //generateStops();
 //generateEdges();
-generateRoutes();
+//generateRoutes();
+generateConnections();
