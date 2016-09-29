@@ -225,7 +225,7 @@ function generateConnections() {
         var generator = new RandomConnectionsGenerator(region, routes);
         generator.generate();
         var connections = generator.getConnections();
-        new TripsVisualizer(region, edges, routes, connections).render("connections_random.png");
+        //new TripsVisualizer(region, edges, routes, connections).render("connections_random.png");
         resolve(connections);
       });
     });
@@ -238,7 +238,7 @@ function generateConnections() {
         var generator = new ParameterizedConnectionsGenerator(region, routes);
         generator.generate();
         var connections = generator.getConnections();
-        new TripsVisualizer(region, edges, routes, connections).render("connections_parameterized.png");
+        //new TripsVisualizer(region, edges, routes, connections).render("connections_parameterized.png");
         resolve(connections);
       });
     });
@@ -248,7 +248,7 @@ function generateConnections() {
   function getGoldenStandardConnections() {
     return new Promise((resolve, reject) => {
       new RegionFactory('input_data/region_cells.csv', true, true).createRegion((region, edges, routes, connections) => {
-        new TripsVisualizer(region, edges, routes, connections).render("connections_gs.png");
+        //new TripsVisualizer(region, edges, routes, connections).render("connections_gs.png");
         resolve(connections);
       });
     });
@@ -263,6 +263,46 @@ function generateConnections() {
       console.log("PARAM: " + parameterizedConnections.length); // TODO
       console.log("RAND: " + randomConnections.length); // TODO
       console.log("GS: " + goldenStandardConnections.length); // TODO
+
+      var connectionDistance = (c1, c2) => {
+        var distanceTime = c1.arrivalTime - c2.arrivalTime;
+        var distanceTrip = DistanceHelpers.line2D(c1.trip, c2.trip);
+        return distanceTime / 60000 + distanceTrip;
+      };
+      var closestConnectionFinder = (connection, connections) => {
+        var minIndex = 0;
+        var maxIndex = connections.length - 1;
+        var currentIndex;
+        var currentElement;
+
+        var smallestDistance = Number.MAX_SAFE_INTEGER;
+        var closestElement = null;
+
+        while (minIndex <= maxIndex) {
+          currentIndex = (minIndex + maxIndex) / 2 | 0;
+          currentElement = connections[currentIndex];
+
+          var d = Math.abs(currentElement.departureTime - connection.departureTime);
+          if (d < smallestDistance) {
+            smallestDistance = d;
+            closestElement = currentElement;
+          } else if (closestElement && d > smallestDistance) {
+            return closestElement;
+          }
+          if (currentElement.departureTime < connection.departureTime) {
+            minIndex = currentIndex + 1;
+          }
+          else if (currentElement.departureTime > connection.departureTime) {
+            maxIndex = currentIndex - 1;
+          }
+          else {
+            return connections[currentIndex];
+          }
+        }
+        return closestElement;
+      };
+      console.log("PARAM distance: " + DistanceHelpers.points(parameterizedConnections, goldenStandardConnections, connectionDistance, closestConnectionFinder)); // TODO
+      console.log("RAND distance: " + DistanceHelpers.points(randomConnections, goldenStandardConnections, connectionDistance, closestConnectionFinder)); // TODO
     })
     .catch(err => {
       console.error(err);
