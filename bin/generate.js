@@ -254,9 +254,8 @@ function generateConnections() {
   // Load golden standard of connections
   function getGoldenStandardConnections() {
     return new Promise((resolve, reject) => {
-      new RegionFactory('input_data/region_cells.csv', true, true).createRegion((region, edges, routes) => {
+      new RegionFactory('input_data/region_cells.csv', true, true).createRegion((region, edges, routes, connections) => {
         new TripsVisualizer(region, edges, routes).render("connections_gs.png");
-        var connections = []; // TODO
         resolve(connections);
       });
     });
