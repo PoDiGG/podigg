@@ -98,7 +98,7 @@ function generateEdges() {
         var generator = new ParameterizedEdgesGenerator(region);
         generator.generate();
         var edges = generator.getEdges();
-        new TripsVisualizer(region, edges, null, generator.debugpoints).render("edges_parameterized.png");
+        new TripsVisualizer(region, edges, null, null, generator.debugpoints).render("edges_parameterized.png");
         resolve(edges);
       });
     });
@@ -160,7 +160,7 @@ function generateRoutes() {
         var generator = new ParameterizedRoutesGenerator(region, edges);
         generator.generate();
         var routes = generator.getRoutes();
-        new TripsVisualizer(region, edges, routes, generator.debugpoints).render("routes_parameterized.png");
+        new TripsVisualizer(region, edges, routes, null, generator.debugpoints).render("routes_parameterized.png");
         resolve(routes);
       });
     });
@@ -224,7 +224,7 @@ function generateConnections() {
         var generator = new RandomConnectionsGenerator(region, routes);
         generator.generate();
         var connections = generator.getConnections();
-        new TripsVisualizer(region, edges, routes).render("connections_random.png");
+        new TripsVisualizer(region, edges, routes, connections).render("connections_random.png");
         resolve(connections);
       });
     });
@@ -255,7 +255,7 @@ function generateConnections() {
   function getGoldenStandardConnections() {
     return new Promise((resolve, reject) => {
       new RegionFactory('input_data/region_cells.csv', true, true).createRegion((region, edges, routes, connections) => {
-        new TripsVisualizer(region, edges, routes).render("connections_gs.png");
+        new TripsVisualizer(region, edges, routes, connections).render("connections_gs.png");
         resolve(connections);
       });
     });
