@@ -15,6 +15,7 @@ const ParameterizedRoutesGenerator = require('../lib/route/ParameterizedRoutesGe
 
 const RandomConnectionsGenerator = require('../lib/connection/RandomConnectionsGenerator');
 const ParameterizedConnectionsGenerator = require('../lib/connection/ParameterizedConnectionsGenerator');
+const GtfsBuilder = require('../lib/gtfs/GtfsBuilder');
 
 function generateStops() {
   // Generate stops based on population distribution
@@ -240,6 +241,10 @@ function generateConnections() {
         var connections = generator.getConnections();
         //new TripsVisualizer(region, edges, routes, connections).render("connections_parameterized.png");
         resolve(connections);
+
+        // TODO: example
+        var builder = new GtfsBuilder(region, routes, connections);
+        builder.generate('input_data/gtfs/');
       });
     });
   }
