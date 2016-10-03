@@ -19,6 +19,8 @@ const RandomConnectionsGenerator = require('../lib/connection/RandomConnectionsG
 const ParameterizedConnectionsGenerator = require('../lib/connection/ParameterizedConnectionsGenerator');
 const GtfsBuilder = require('../lib/gtfs/GtfsBuilder');
 
+const GtfsGenerator = require('../lib/GtfsGenerator');
+
 function generateRegion() {
   new TripsVisualizer(new NoisyRegionGenerator().generate().getRegion(), false, false, false, false, 1, true).render("region_noisy.png");
   new TripsVisualizer(new IsolatedRegionGenerator().generate().getRegion(), false, false, false, false, 1, true).render("region_isolated.png");
@@ -322,25 +324,14 @@ function generateConnections() {
 }
 
 function generateAll() {
-  //var region = new NoisyRegionGenerator().generate().getRegion();
-  //var region = new IsolatedRegionGenerator().generate().getRegion();
-  new RegionFactory('input_data/region_cells.csv').createRegion((region) => {
-    var options = {
-      lat_offset: 0,
-      lon_offset: 0,
-      latlong_per_cell: 100
-    };
-    var pointToLatLon = DistanceHelpers.newPointToLatLonConverter(options.lat_offset, options.lon_offset, options.latlong_per_cell);
-
-    var generator_stops = new ParameterizedStopsGenerator(region, { stops: 1000 }).generate();
-    var edges = new ParameterizedEdgesGenerator(region, { loosestations_max_range_factor: 0.5 }).generate().getEdges();
-    generator_stops.generatePostEdges(edges);
-    var routes = new ParameterizedRoutesGenerator(region, edges, { routes: 2000, largest_stations_fraction: 0.1 }).generate().getRoutes();
-    var connections = new ParameterizedConnectionsGenerator(region, routes, pointToLatLon, { time_initial: 1451606400000, time_final: 1454284800000 }).generate().getConnections();
-
-    new TripsVisualizer(region, edges, routes, connections, false, 2, true).render("generated_all.png");
-    new GtfsBuilder(region, routes, connections, pointToLatLon).generate('input_data/gtfs_all/');
-  });
+  new GtfsGenerator({
+    stops: 1000,
+    loosestations_max_range_factor: 0.5,
+    routes: 2000,
+    largest_stations_fraction: 0.1,
+    time_initial: 1451606400000,
+    time_final: 1454284800000
+  }).generate('output_data');
 }
 
 //generateRegion();
