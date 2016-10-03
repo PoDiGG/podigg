@@ -325,14 +325,21 @@ function generateAll() {
   //var region = new NoisyRegionGenerator().generate().getRegion();
   //var region = new IsolatedRegionGenerator().generate().getRegion();
   new RegionFactory('input_data/region_cells.csv').createRegion((region) => {
+    var options = {
+      lat_offset: 0,
+      lon_offset: 0,
+      latlong_per_cell: 100
+    };
+    var pointToLatLon = DistanceHelpers.newPointToLatLonConverter(options.lat_offset, options.lon_offset, options.latlong_per_cell);
+
     var generator_stops = new ParameterizedStopsGenerator(region, { stops: 1000 }).generate();
     var edges = new ParameterizedEdgesGenerator(region, { loosestations_max_range_factor: 0.5 }).generate().getEdges();
     generator_stops.generatePostEdges(edges);
     var routes = new ParameterizedRoutesGenerator(region, edges, { routes: 2000, largest_stations_fraction: 0.1 }).generate().getRoutes();
-    var connections = new ParameterizedConnectionsGenerator(region, routes, { time_initial: 1451606400000, time_final: 1454284800000 }).generate().getConnections();
+    var connections = new ParameterizedConnectionsGenerator(region, routes, pointToLatLon, { time_initial: 1451606400000, time_final: 1454284800000 }).generate().getConnections();
 
     new TripsVisualizer(region, edges, routes, connections, false, 2, true).render("generated_all.png");
-    new GtfsBuilder(region, routes, connections).generate('input_data/gtfs_all/');
+    new GtfsBuilder(region, routes, connections, pointToLatLon).generate('input_data/gtfs_all/');
   });
 }
 
