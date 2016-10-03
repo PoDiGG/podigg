@@ -321,8 +321,34 @@ function generateConnections() {
     });
 }
 
-generateRegion();
+function generateAll() {
+  //var region = new NoisyRegionGenerator().generate().getRegion();
+  //var region = new IsolatedRegionGenerator().generate().getRegion();
+  new RegionFactory('input_data/region_cells.csv').createRegion((region) => {
+    var generator_stops = new ParameterizedStopsGenerator(region);
+    generator_stops.generate();
+
+    var generator_edges = new ParameterizedEdgesGenerator(region);
+    generator_edges.generate();
+    var edges = generator_edges.getEdges();
+
+    generator_stops.generatePostEdges(edges);
+
+    /*var generator_routes = new ParameterizedRoutesGenerator(region, edges);
+    generator_routes.generate();
+    var routes = generator_routes.getRoutes();
+
+    var generator_connections = new ParameterizedConnectionsGenerator(region, routes);
+    generator_connections.generate();
+    var connections = generator_connections.getConnections();*/
+
+    new TripsVisualizer(region, edges, false, false, false, 2, true).render("generated_all.png");
+  });
+}
+
+//generateRegion();
 //generateStops();
 //generateEdges();
 //generateRoutes();
 //generateConnections();
+generateAll();
