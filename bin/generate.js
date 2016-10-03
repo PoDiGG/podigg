@@ -325,24 +325,14 @@ function generateAll() {
   //var region = new NoisyRegionGenerator().generate().getRegion();
   //var region = new IsolatedRegionGenerator().generate().getRegion();
   new RegionFactory('input_data/region_cells.csv').createRegion((region) => {
-    var generator_stops = new ParameterizedStopsGenerator(region);
-    generator_stops.generate();
-
-    var generator_edges = new ParameterizedEdgesGenerator(region);
-    generator_edges.generate();
-    var edges = generator_edges.getEdges();
-
+    var generator_stops = new ParameterizedStopsGenerator(region, { stops: 1000 }).generate();
+    var edges = new ParameterizedEdgesGenerator(region, { loosestations_max_range_factor: 0.5 }).generate().getEdges();
     generator_stops.generatePostEdges(edges);
+    var routes = new ParameterizedRoutesGenerator(region, edges, { routes: 2000, largest_stations_fraction: 0.1 }).generate().getRoutes();
+    var connections = new ParameterizedConnectionsGenerator(region, routes, { time_initial: 1451606400000, time_final: 1454284800000 }).generate().getConnections();
 
-    /*var generator_routes = new ParameterizedRoutesGenerator(region, edges);
-    generator_routes.generate();
-    var routes = generator_routes.getRoutes();
-
-    var generator_connections = new ParameterizedConnectionsGenerator(region, routes);
-    generator_connections.generate();
-    var connections = generator_connections.getConnections();*/
-
-    new TripsVisualizer(region, edges, false, false, false, 2, true).render("generated_all.png");
+    new TripsVisualizer(region, edges, routes, connections, false, 2, true).render("generated_all.png");
+    new GtfsBuilder(region, routes, connections).generate('input_data/gtfs_all/');
   });
 }
 
