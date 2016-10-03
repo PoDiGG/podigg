@@ -1,5 +1,7 @@
 'use strict';
 
+const NoisyRegionGenerator = require('../lib/region/NoisyRegionGenerator');
+const IsolatedRegionGenerator = require('../lib/region/IsolatedRegionGenerator');
 const RegionFactory = require('../lib/region/RegionFactory');
 const TripsVisualizer = require('../lib/visualize/TripsVisualizer');
 const DistanceHelpers = require('../lib/util/DistanceHelpers');
@@ -16,6 +18,11 @@ const ParameterizedRoutesGenerator = require('../lib/route/ParameterizedRoutesGe
 const RandomConnectionsGenerator = require('../lib/connection/RandomConnectionsGenerator');
 const ParameterizedConnectionsGenerator = require('../lib/connection/ParameterizedConnectionsGenerator');
 const GtfsBuilder = require('../lib/gtfs/GtfsBuilder');
+
+function generateRegion() {
+  new TripsVisualizer(new NoisyRegionGenerator().generate().getRegion(), false, false, false, false, 1, true).render("region_noisy.png");
+  new TripsVisualizer(new IsolatedRegionGenerator().generate().getRegion(), false, false, false, false, 1, true).render("region_isolated.png");
+}
 
 function generateStops() {
   // Generate stops based on population distribution
@@ -314,7 +321,8 @@ function generateConnections() {
     });
 }
 
+generateRegion();
 //generateStops();
 //generateEdges();
 //generateRoutes();
-generateConnections();
+//generateConnections();
