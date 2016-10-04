@@ -325,14 +325,14 @@ function generateConnections() {
 
 function generateAll() {
   new GtfsGenerator({
-    region_generator: 'file',
-    region_file_path: 'input_data/region_cells.csv',
-    stops: 1000,
-    loosestations_max_range_factor: 0.5,
-    routes: 2000,
-    largest_stations_fraction: 0.1,
-    time_initial: 1451606400000,
-    time_final: 1454284800000
+    "region:region_generator": 'file',
+    "region:region_file_path": 'input_data/region_cells.csv',
+    "stops:stops": 1000,
+    "edges:loosestations_max_range_factor": 0.5,
+    "routes:routes": 2000,
+    "routes:largest_stations_fraction": 0.1,
+    "connections:time_initial": 1451606400000,
+    "connections:time_final": 1454284800000
   }).generate('output_data');
 }
 

@@ -10,6 +10,9 @@ It is based on five sub-generators:
 
 # Parameters
 
+All parameters are scoped by their generator name in lower-case, except for the general parameters.
+For example, choosing a region's latitude offset is done with the parameter `region:lat_offset`. 
+
 ## General
 
 | Name          | Default Value | Description   |
