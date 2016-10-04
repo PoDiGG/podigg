@@ -325,6 +325,8 @@ function generateConnections() {
 
 function generateAll() {
   new GtfsGenerator({
+    region_generator: 'file',
+    region_file_path: 'input_data/region_cells.csv',
     stops: 1000,
     loosestations_max_range_factor: 0.5,
     routes: 2000,
