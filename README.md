@@ -8,6 +8,15 @@ It is based on five sub-generators:
 * Routes: Routes over one or more edges.
 * Connections: Instantiation of routes at times.
 
+# Docker
+
+This generator can be run using a Docker container as follows:
+
+```bash
+docker build -t gtfs-generator .
+docker run --rm -it -v $(pwd)/docker-out:/output_data -e GTFS_GEN_SEED=100 gtfs-generator
+```
+
 # Parameters
 
 All parameters are scoped by their generator name in lower-case, except for the general parameters.
