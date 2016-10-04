@@ -13,11 +13,18 @@ It is based on five sub-generators:
 All parameters are scoped by their generator name in lower-case, except for the general parameters.
 For example, choosing a region's latitude offset is done with the parameter `region:lat_offset`. 
 
+When configuring parameters via environment variables,
+parameters should be defined with the prefix `GTFS_GEN_`,
+followed by the generator name + `__` (or empty if general) and the parameter name.
+The generator and parameter names can either be upper or lower case.
+For example, choosing a region's latitude offset is done with the parameter `GTFS_GEN_REGION__LAT_OFFSET`,
+and choosing the seed is done with `GTFS_GEN_SEED`.
+
 ## General
 
 | Name          | Default Value | Description   |
 | ------------- |-------------- | ------------- |
-| seed          | `1`             | The random seed |
+| seed          | `1`           | The random seed |
 
 ## Region
 
