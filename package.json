@@ -13,6 +13,7 @@
     "csv-parse": "^1.1.7",
     "csv-write-stream": "^2.0.0",
     "lodash": "^4.15.0",
+    "random-name": "^0.1.2",
     "stream-transform": "^0.1.1"
   }
 }
