@@ -1,4 +1,5 @@
-# GTFS Generator
+# PoDiGG
+_POpulation DIstribution-based Gtfs Generator_
 A realistic GTFS dataset generator.
 
 It is based on five sub-generators:
