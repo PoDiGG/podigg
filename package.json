@@ -1,7 +1,7 @@
 {
-  "name": "generator-manual",
+  "name": "podigg",
   "version": "1.0.0",
-  "description": "",
+  "description": "POpulation DIstribution-based Gtfs Generator",
   "main": "lib/GtfsGenerator.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
