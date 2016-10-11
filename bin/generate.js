@@ -136,10 +136,11 @@ function generateEdges() {
       console.log("GS: " + goldenStandardEdges.length); // TODO
 
       // Compare the two edge lists with the golden standard (calculate distance)
-      var distance_param = DistanceHelpers.points(parameterizedEdges, goldenStandardEdges, DistanceHelpers.line2D);
+      /*var distance_param = DistanceHelpers.points(parameterizedEdges, goldenStandardEdges, DistanceHelpers.line2D);
       var distance_rand = DistanceHelpers.points(randomEdges, goldenStandardEdges, DistanceHelpers.line2D);
       console.log("PARAM distance: " + distance_param); // TODO
       console.log("RAND distance: " + distance_rand); // TODO
+      */
     })
     .catch(err => {
       console.error(err);
