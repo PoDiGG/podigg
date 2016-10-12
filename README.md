@@ -52,7 +52,7 @@ Several region generators exist which are explained hereafter, one of them needs
 
 | Name             | Default Value | Description   |
 | ---------------- |-------------- | ------------- |
-| region_file_path | `null`        | Path to the cells in csv. Expected columns (x:integer, y:integer, lat:float, long:float, density:float) |
+| region_file_path | `null`        | Path to the cells in csv, this can also be a filename of an internal region file from the `data` directory, for example `region_BE.csv`. Expected columns (x:integer, y:integer, lat:float, long:float, density:float) |
 
 ### Noisy
 
