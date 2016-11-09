@@ -41,6 +41,8 @@ and choosing the seed is done with `GTFS_GEN_SEED`.
 
 Several region generators exist which are explained hereafter, one of them needs to be selected.
 
+Config prefix: `region:`
+
 | Name             | Default Value | Description   |
 | ---------------- |-------------- | ------------- |
 | region_generator | `isolated`    | Name of a region generator. (isolated, noisy or region) |
@@ -83,6 +85,8 @@ The population density is high at the center of the cluster and decreases to zer
 
 The generation of stops
 
+Config prefix: `stops:`
+
 | Name                          | Default Value | Description   |
 | ----------------------------- |-------------- | ------------- |
 | stops                         | `600`         | How many stops should be generated |
@@ -99,6 +103,8 @@ The generation of stops
 
 The generation of edges
 
+Config prefix: `edges:`
+
 | Name                                          | Default Value | Description   |
 | --------------------------------------------- |-------------- | ------------- |
 | max_intracluster_distance                     | `100`         | The maximum distance stops in one cluster can have from each other |
@@ -113,6 +119,8 @@ The generation of edges
 
 The generation of trips and routes
 
+Config prefix: `routes:`
+
 | Name                       | Default Value | Description   |
 | -------------------------- |-------------- | ------------- |
 | routes                     | `1000`          | The number of routes to generate |
@@ -125,6 +133,8 @@ The generation of trips and routes
 
 The generation of connections
 
+Config prefix: `connections:`
+
 | Name                        | Default Value                                                                                                               | Description   |
 | --------------------------- |---------------------------------------------------------------------------------------------------------------------------- | ------------- |
 | time_initial                | `0`                                                                                                                         | The initial timestamp (ms) |
@@ -134,5 +144,23 @@ The generation of connections
 | time_choice_power           | `3`                                                                                                                         | The power for selecting more frequent times for selecting a connection's start time |
 | vehicle_max_speed           | `160`                                                                                                                       | The maximum speed of a vehicle in km/h, used to calculate the duration of a connection |
 | vehicle_speedup             | `1000`                                                                                                                      | The vehicle speedup in km/(h^2), used to calculate the duration of a connection |
+| hourly_weekday_distribution | `[0.05,0.01,0.01,0.48,2.46,5.64,7.13,6.23,5.44,5.43,5.41,5.49,5.42,5.41,5.57,6.70,6.96,6.21,5.40,4.95,4.33,3.31,1.56,0.42]` | The chance (percentage) for each hour to have a connection on a weekday |
+| hourly_weekend_distribution | `[0.09,0.01,0.01,0.08,0.98,3.56,5.23,5.79,5.82,5.89,5.84,5.91,5.88,5.95,5.87,5.95,5.89,5.96,5.92,5.94,5.62,4.61,2.45,0.76]` | The chance (percentage) for each hour to have a connection on a weekend day |
+
+## Query Set
+
+Optionally, PoDiGG can also generate realistic route planning query sets based on the generated dataset.
+For this, the `queryset:generate` option must be set to `true`.
+
+Config prefix: `queryset:`
+
+| Name                        | Default Value                                                                                                               | Description   |
+| --------------------------- |---------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| start_stop_choice_power     | `4`                                                                                                                         | Higher values means higher chance on larger stations when selecting starting stations |
+| query_count                 | `100`                                                                                                                       | The number of queries that should be generated |
+| time_initial                | `0`                                                                                                                         | The initial timestamp (ms) |
+| time_final                  | `24 * 3600000`                                                                                                              | The final timestamp (ms) |
+| time_choice_power           | `3`                                                                                                                         | The power for selecting more frequent times for selecting a connection's start time |
+| max_time_before_departure   | `3600000`                                                                                                                   | The maximum time in ms that a query for a certain departure time must be queried |
 | hourly_weekday_distribution | `[0.05,0.01,0.01,0.48,2.46,5.64,7.13,6.23,5.44,5.43,5.41,5.49,5.42,5.41,5.57,6.70,6.96,6.21,5.40,4.95,4.33,3.31,1.56,0.42]` | The chance (percentage) for each hour to have a connection on a weekday |
 | hourly_weekend_distribution | `[0.09,0.01,0.01,0.08,0.98,3.56,5.23,5.79,5.82,5.89,5.84,5.91,5.88,5.95,5.87,5.95,5.89,5.96,5.92,5.94,5.62,4.61,2.45,0.76]` | The chance (percentage) for each hour to have a connection on a weekend day |

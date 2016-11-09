@@ -333,7 +333,8 @@ function generateAll() {
     "routes:routes": 2000,
     "routes:largest_stations_fraction": 0.1,
     "connections:time_initial": 1451606400000,
-    "connections:time_final": 1454284800000
+    "connections:time_final": 1454284800000,
+    "queryset:generate": true
   }).generate('output_data');
 }
 
