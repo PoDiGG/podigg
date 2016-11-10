@@ -124,7 +124,7 @@ Config prefix: `routes:`
 | Name                       | Default Value | Description   |
 | -------------------------- |-------------- | ------------- |
 | routes                     | `1000`          | The number of routes to generate |
-| largest_stations_fraction  | `0.25`          | The fraction of (largest) stops between which routes need to be formed |
+| largest_stations_fraction  | `0.05`          | The fraction of (largest) stops between which routes need to be formed |
 | penalize_station_size_area | `10`            | The area in which stop sizes should be penalized |
 | max_route_length           | `10`            | The maximum number of edges a route can have in the macro-step, the larger, the slower this generator |
 | min_route_length           | `4`             | The minimum number of edges a route must have in the macro-step |
