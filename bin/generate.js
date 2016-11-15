@@ -37,6 +37,7 @@ function generateAll() {
     "routes:largest_stations_fraction": 0.05,
     "connections:time_initial": 1451606400000,
     "connections:time_final": 1454284800000,
+    "connections:delay_chance": 0.1,
     "queryset:generate": true
   }).generate('output_data');
 }

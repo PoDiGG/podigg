@@ -135,16 +135,21 @@ The generation of connections
 
 Config prefix: `connections:`
 
-| Name                        | Default Value                                                                                                               | Description   |
-| --------------------------- |---------------------------------------------------------------------------------------------------------------------------- | ------------- |
-| time_initial                | `0`                                                                                                                         | The initial timestamp (ms) |
-| time_final                  | `24 * 3600000`                                                                                                              | The final timestamp (ms) |
-| connections                 | `30000`                                                                                                                     | The number of connections to generate |
-| route_choice_power          | `2`                                                                                                                         | The power for selecting longer routes for instantiating connections |
-| vehicle_max_speed           | `160`                                                                                                                       | The maximum speed of a vehicle in km/h, used to calculate the duration of a connection |
-| vehicle_speedup             | `1000`                                                                                                                      | The vehicle speedup in km/(h^2), used to calculate the duration of a connection |
-| hourly_weekday_distribution | `[0.05,0.01,0.01,0.48,2.46,5.64,7.13,6.23,5.44,5.43,5.41,5.49,5.42,5.41,5.57,6.70,6.96,6.21,5.40,4.95,4.33,3.31,1.56,0.42]` | The chance (percentage) for each hour to have a connection on a weekday |
-| hourly_weekend_distribution | `[0.09,0.01,0.01,0.08,0.98,3.56,5.23,5.79,5.82,5.89,5.84,5.91,5.88,5.95,5.87,5.95,5.89,5.96,5.92,5.94,5.62,4.61,2.45,0.76]` | The chance (percentage) for each hour to have a connection on a weekend day |
+| Name                              | Default Value                                                                                                               | Description   |
+| ----------------------------------|---------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| time_initial                      | `0`                                                                                                                         | The initial timestamp (ms) |
+| time_final                        | `24 * 3600000`                                                                                                              | The final timestamp (ms) |
+| connections                       | `30000`                                                                                                                     | The number of connections to generate |
+| route_choice_power                | `2`                                                                                                                         | The power for selecting longer routes for instantiating connections |
+| vehicle_max_speed                 | `160`                                                                                                                       | The maximum speed of a vehicle in km/h, used to calculate the duration of a connection |
+| vehicle_speedup                   | `1000`                                                                                                                      | The vehicle speedup in km/(h^2), used to calculate the duration of a connection |
+| hourly_weekday_distribution       | `[0.05,0.01,0.01,0.48,2.46,5.64,7.13,6.23,5.44,5.43,5.41,5.49,5.42,5.41,5.57,6.70,6.96,6.21,5.40,4.95,4.33,3.31,1.56,0.42]` | The chance (percentage) for each hour to have a connection on a weekday |
+| hourly_weekend_distribution       | `[0.09,0.01,0.01,0.08,0.98,3.56,5.23,5.79,5.82,5.89,5.84,5.91,5.88,5.95,5.87,5.95,5.89,5.96,5.92,5.94,5.62,4.61,2.45,0.76]` | The chance (percentage) for each hour to have a connection on a weekend day |
+| delay_chance                      | `0`                                                                                                                         | The 0-1 chance that a connection will have a delay, 0 will not produce any delays (default) |
+| delay_max                         | `3600000`                                                                                                                   | The maximum delay in milliseconds |
+| delay_choice_power                | `1`                                                                                                                         | Higher values means higher chance on larger delays |
+| delay_reasons                     | `{ 'td:DamagedVehicle': 0.4, 'td:Strike': 0.2, 'td:Accident': 0.2, 'td:BadWeather': 0.1, 'td:Obstruction': 0.1}`            | Default reasons for having delays with their respective chance. Keys must be prefixed with td: http://purl.org/td/transportdisruption# |
+| delay_reduction_duration_fraction | `0.1`                                                                                                                       | The maximum fraction of connection duration that can be subtracted when there is a delay |
 
 ## Query Set
 
