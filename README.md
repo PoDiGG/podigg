@@ -1,6 +1,9 @@
 # PoDiGG
 _POpulation DIstribution-based Gtfs Generator_
 
+[![npm version](https://badge.fury.io/js/podigg.svg)](https://www.npmjs.com/package/podigg)
+[![Docker Automated Build](https://img.shields.io/docker/automated/podigg/podigg.svg)](https://hub.docker.com/r/podigg/podigg/)
+
 A realistic GTFS dataset generator.
 
 It is based on five sub-generators:
