@@ -6,6 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "bin": {
+    "podigg": "./bin/generate-config.js",
+    "podigg-env": "./bin/generate-env.js"
+  },
   "author": "",
   "license": "MIT",
   "dependencies": {

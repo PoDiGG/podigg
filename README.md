@@ -10,7 +10,45 @@ It is based on five sub-generators:
 * Routes: Routes over one or more edges.
 * Connections: Instantiation of routes at times.
 
-# Docker
+# Usage
+
+# Command line
+
+The easiest way to run the generator is using the command line tool:
+```bash
+podigg [output folder [path to a JSON config file]]
+```
+The default output folder is `output_data`.
+
+This config file contains parameters for the generator, as explained below.
+Example of a config file:
+```json
+{
+    "seed": "1",
+    "stops:stops": "100",
+    "connections:connections": "3000"
+}
+```
+
+Alternatively, the generator can also be configured using environment variables, as explained below.
+In that case, the generator must be called as follows:
+```bash
+podigg-env [output folder]
+```
+
+## From code
+
+The generator can be included into your application as follows:
+```js
+const PodiggGenerator = require('podigg');
+new PodiggGenerator({
+    "seed": 1,
+    "stops:stops": 100,
+    "connections:connections": 3000
+}).generate('output_data');
+```
+
+## Docker
 
 This generator can be run using a Docker container as follows:
 
@@ -18,6 +56,8 @@ This generator can be run using a Docker container as follows:
 docker build -t gtfs-generator .
 docker run --rm -it -v $(pwd)/docker-out:/output_data -e GTFS_GEN_SEED=100 gtfs-generator
 ```
+
+Parameters must be passed using environment variables.
 
 # Parameters
 
