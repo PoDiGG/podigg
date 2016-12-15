@@ -10,9 +10,16 @@ It is based on five sub-generators:
 * Routes: Routes over one or more edges.
 * Connections: Instantiation of routes at times.
 
+# Install
+
+This generator is a [Node.js](http://nodejs.org/) application that can be installed by running:
+```bash
+[sudo] npm install -g podigg
+```
+
 # Usage
 
-# Command line
+## Command line
 
 The easiest way to run the generator is using the command line tool:
 ```bash
