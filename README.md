@@ -60,11 +60,18 @@ new PodiggGenerator({
 
 ## Docker
 
-This generator can be run using a Docker container as follows:
-
+Downloading and running the container from the Docker hub:
 ```bash
-docker build -t gtfs-generator .
-docker run --rm -it -v $(pwd)/docker-out:/output_data -e GTFS_GEN_SEED=100 gtfs-generator
+docker pull podigg/podigg
+docker run --rm -it -v $(pwd)/docker-out:/output_data -e GTFS_GEN_SEED=100 podigg/podigg
+```
+
+Building and running the container from this repo:
+```bash
+git clone git@github.com:PoDiGG/podigg.git
+cd podigg
+docker build -t podigg .
+docker run --rm -it -v $(pwd)/docker-out:/output_data -e GTFS_GEN_SEED=100 podigg
 ```
 
 Parameters must be passed using environment variables.
