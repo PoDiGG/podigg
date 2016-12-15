@@ -1,4 +1,4 @@
-#!/usr/bin/env node --harmony_destructuring
+#!/usr/bin/env node
 'use strict';
 
 const GtfsGenerator = require('../lib/GtfsGenerator');
