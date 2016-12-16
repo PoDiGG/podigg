@@ -10,7 +10,19 @@
     "podigg": "./bin/generate-config.js",
     "podigg-env": "./bin/generate-env.js"
   },
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/PoDiGG/podigg.git"
+  },
+  "bugs": {
+    "url": "https://github.com/PoDiGG/podigg-lc/issues"
+  },
+  "keywords": [
+    "GTFS",
+    "generator",
+    "dataset"
+  ],
+  "author": "Ruben Taelman",
   "license": "MIT",
   "dependencies": {
     "armillary": "^0.1.3",
