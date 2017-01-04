@@ -34,9 +34,9 @@ This config file contains parameters for the generator, as explained below.
 Example of a config file:
 ```json
 {
-    "seed": "1",
-    "stops:stops": "100",
-    "connections:connections": "3000"
+    "seed": 1,
+    "stops:stops": 100,
+    "connections:connections": 3000
 }
 ```
 
