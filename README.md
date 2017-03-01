@@ -195,7 +195,7 @@ Config prefix: `connections:`
 | Name                              | Default Value                                                                                                               | Description   |
 | ----------------------------------|---------------------------------------------------------------------------------------------------------------------------- | ------------- |
 | time_initial                      | `0`                                                                                                                         | The initial timestamp (ms) of trip starting times |
-| time_final                        | `24 * 3600000`                                                                                                              | The final timestamp (ms) of trip starting times |
+| time_final                        | `24 * 3600000 * 31`                                                                                                              | The final timestamp (ms) of trip starting times |
 | connections                       | `30000`                                                                                                                     | The number of connections to generate |
 | stop_wait_min                     | `60000`                                                                                                                     | The minimum waiting time per stop in milliseconds |
 | stop_wait_size_factor             | `60000`                                                                                                                     | The factor in milliseconds of stop waiting time to add depending on the station size |
