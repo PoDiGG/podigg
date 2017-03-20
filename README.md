@@ -207,7 +207,7 @@ Config prefix: `connections:`
 | delay_chance                      | `0`                                                                                                                         | The 0-1 chance that a connection will have a delay, 0 will not produce any delays (default) |
 | delay_max                         | `3600000`                                                                                                                   | The maximum delay in milliseconds |
 | delay_choice_power                | `1`                                                                                                                         | Higher values means higher chance on larger delays |
-| delay_reasons                     | `{ 'td:DamagedVehicle': 0.4, 'td:Strike': 0.2, 'td:Accident': 0.2, 'td:BadWeather': 0.1, 'td:Obstruction': 0.1}`            | Default reasons for having delays with their respective chance. Keys must be prefixed with td: http://purl.org/td/transportdisruption# |
+| delay_reasons                     | [`{ ... }`](https://github.com/PoDiGG/podigg/blob/master/lib/util/Util.js#L34)                                              | Default reasons for having delays with their respective chance. Keys must be prefixed with td: http://purl.org/td/transportdisruption# |
 | delay_reduction_duration_fraction | `0.1`                                                                                                                       | The maximum fraction of connection duration that can be subtracted when there is a delay |
 
 ## Query Set
