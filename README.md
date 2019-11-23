@@ -13,6 +13,9 @@ It is based on five sub-generators:
 * Routes: Routes over one or more edges.
 * Connections: Instantiation of routes at times.
 
+If you want more background information about the motivations of this work,
+be sure to have a look at our [article](http://rubensworks.net/raw/publications/2018/podigg.pdf).
+
 # Install
 
 This generator is a [Node.js](http://nodejs.org/) application that can be installed by running:
